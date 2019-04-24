@@ -1,9 +1,9 @@
-package application;
+package CS400ATeam.application;
 
-public interface HashTableADT<K, V> {
-	public V get (K key);
-	public void add(K key, V value);
-	public V remove(K key);
-	public boolean isEmpty();
-	public int getSize();
+public interface HashTableADT {
+	String get (String key);
+	void add(String key, String location, String date);
+	boolean remove(String key);
+	boolean isEmpty();
+	int getSize();
 }
