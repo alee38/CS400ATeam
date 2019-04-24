@@ -1,9 +1,9 @@
 package application;
 
 public interface HashTableADT<K, V> {
-	V get (K key);
-	void add();
-	boolean remove();
-	boolean isEmpty();
-	int getSize();
+	public V get (K key);
+	public void add(K key, V value);
+	public V remove(K key);
+	public boolean isEmpty();
+	public int getSize();
 }
