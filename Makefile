@@ -19,3 +19,6 @@ test:
 clean:
 	\rm *.class
 	\rm executable.jar
+
+zip:
+	jar -cMf team.zip README.txt executable.jar screenshot* application
