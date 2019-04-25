@@ -12,6 +12,6 @@ Team Members:
 
 Notes or comments to the grader:
 
-[place any comments or notes that will help the grader here]
+Everything is hard coded at the moment.
 
 
