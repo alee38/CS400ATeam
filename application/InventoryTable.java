@@ -1,7 +1,7 @@
-package CS400ATeam.application;
+package application;
 
 
-public class InventoryTable implements HashTableADT {
+public class InventoryTable {
 
     private class Node {
         private String key;
@@ -42,7 +42,7 @@ public class InventoryTable implements HashTableADT {
         return (int) Math.abs(key.hashCode() % capacity);
     }
 
-    @Override
+
     public String[] get(String key) {
         // TODO Auto-generated method stub
         int index = hash(key);
@@ -57,7 +57,7 @@ public class InventoryTable implements HashTableADT {
         return null;
     }
 
-    @Override
+ 
     public void add(String key, String location, String date) {
         // TODO Auto-generated method stub
         insertHelper(key, location, date, table);
@@ -101,20 +101,20 @@ public class InventoryTable implements HashTableADT {
         return (double) size / capacity;
     }
 
-    @Override
+
     public boolean isEmpty() {
         // TODO Auto-generated method stub
         return size == 0;
     }
 
-    @Override
+
     public int getSize() {
         // TODO Auto-generated method stub
         return this.size;
     }
 
 
-    @Override
+
     public boolean remove(String key) {
         // TODO Auto-generated method stub
         

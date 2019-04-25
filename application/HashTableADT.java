@@ -1,4 +1,4 @@
-package CS400ATeam.application;
+package application;
 
 public interface HashTableADT {
 	String get (String key);

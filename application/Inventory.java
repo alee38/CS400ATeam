@@ -1,4 +1,4 @@
-package CS400ATeam.application;
+package application;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
