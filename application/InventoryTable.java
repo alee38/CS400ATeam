@@ -16,6 +16,7 @@ public class InventoryTable {
 
                 this.key = key;
                 this.location = location;
+                this.date = date;
                 this.next = null;
             }
         }
@@ -170,5 +171,4 @@ public class InventoryTable {
         }
         return false;
     }
-
 }

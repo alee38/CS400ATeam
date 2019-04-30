@@ -4,27 +4,27 @@
 		{
 			"itemName":"computer-101", 
 			"itemRoom":"9313",
-			"itemDate":"13Feb2019"
+			"itemDate":"12/02/2019"
 		},
 		{
 			"itemName":"computer-222", 
 			"itemRoom":"9311",
-			"itemDate":"14Feb2019"
+			"itemDate":"14/02/2019"
 		},
 		{
 			"itemName":"printer-101", 
 			"itemRoom":"1134",
-			"itemDate":"12Feb2019"
+			"itemDate":"12/02/2019"
 		},
 		{
 			"itemName":"printer-345", 
 			"itemRoom":"9313",
-			"itemDate":"13Feb2019"
+			"itemDate":"13/02/2019"
 		},
 		{
 			"itemName":"computer-987", 
 			"itemRoom":"9313",
-			"itemDate":"13Feb2019"
+			"itemDate":"13/02/2019"
 		}
 	]
 }

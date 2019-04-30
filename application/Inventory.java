@@ -1,4 +1,5 @@
 package application;
+import com.google.gson.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -31,17 +32,26 @@ public class Inventory {
         }
     }
     
+    private void updateJSON(Inventory table) {
+    	Gson gsonBuilder = new GsonBuilder().create();
+    	String jsonFromList = gsonBuilder.toJson(table);
+    	System.out.println(jsonFromList);
+    }
+    
+    
     //test
     private void printTable() {
-        System.out.println(table.get("computer-101")[0]);
+        System.out.println(table.get("computer-222")[1]);
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
         // TODO Auto-generated method stub
-        String test="/Users/A/eclipse-workspace/TeamProject/CS400ATeam/application/items.json";
+        String test="C:/Users/Andrew/eclipse-workspace/ATeam/CS400ATeam/items.json";
         Inventory inventory=new Inventory();
         inventory.readFile(test);
+       // inventory.updateJSON(inventory);
         inventory.printTable();
+        
 
     }
 
