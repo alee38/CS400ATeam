@@ -61,11 +61,11 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     Scene scene = new Scene(new Group());
     stage.setTitle("CompHelp Inventory");
     stage.setWidth(450);
-    stage.setHeight(550);
+    stage.setHeight(575);
 
     // Read in JSON file and place data in observable list
-    String output = "C:/Users/Andrew/eclipse-workspace/ATeam/CS400ATeam/output.json";
-    inventory.readFile(output);
+    String file = "C:/Users/Andrew/eclipse-workspace/ATeam/CS400ATeam/output.json";
+    inventory.readFile(file);
     HashMap<String,HashNode> table1 = inventory.getTable();
     for (String key:table1.keySet()) {
     	data.addAll(new Computer(table1.get(key).key, table1.get(key).location,table1.get(key).date ));
@@ -127,6 +127,36 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     });
     
     Button search = new Button("Search");
+    Button close = new Button("Close");
+    
+    // Handle Close button
+    close.setOnAction((ActionEvent e) -> {
+    
+    	BorderPane root = new BorderPane();
+        Scene saveScene = new Scene(root, 200, 50);
+        Stage save = new Stage();
+        save.setScene(saveScene);
+        save.setX(400);
+        save.setY(50);
+        Button saveButton = new Button("Save");
+        Button dontSaveButton = new Button("Exit without Saving");
+        root.setLeft(saveButton);
+        root.setRight(dontSaveButton);
+        save.show();
+        
+        // handle save button by saving to JSON
+       saveButton.setOnAction((ActionEvent saveAll) -> {
+    	   inventory.writeJSON();
+       });
+        
+        
+        
+        // handle Dont Save by closing everything
+        dontSaveButton.setOnAction((ActionEvent event) -> {
+        	save.close();
+        	stage.close();
+        });
+    });
     
     HBox hBox = new HBox(choiceBox, textField, search);// Add choiceBox and textField to hBox
     hBox.setAlignment(Pos.CENTER);// Center HBox
@@ -191,7 +221,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
           
           // Creates "Successfully Added" window on click
           BorderPane root = new BorderPane();
-          Scene successScene = new Scene(root, 150, 150);
+          Scene successScene = new Scene(root, 200, 200);
           Stage success = new Stage();
           success.setScene(successScene);
           success.setX(600);
@@ -211,7 +241,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
       }
     });
-    vbox.getChildren().addAll(label, table, hBox, b1);
+    vbox.getChildren().addAll(label, table, hBox, b1, close);
 
     ((Group) scene.getRoot()).getChildren().addAll(vbox);
 
