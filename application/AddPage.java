@@ -14,6 +14,11 @@ package application;
  import javafx.geometry.Insets;
  import javafx.geometry.Orientation;
 
+ 
+ /*
+  * Creates a GUI for the page on which users will add
+  * an item by typing its name, location, and date.
+  */
  public class AddPage extends Application {
 
 

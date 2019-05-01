@@ -15,7 +15,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-
+/*
+ * Creates a GUI in which users will see the details of 
+ * the item they searched for.
+ */
 public class ItemDescription extends Application {
     @Override
     public void start(Stage primaryStage) {
@@ -25,7 +28,8 @@ public class ItemDescription extends Application {
             GridPane grid = new GridPane();
             Scene scene = new Scene(grid, 300, 200);
 
-            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("application.css")
+            		.toExternalForm());
             // Label label = new Label("Complete Inventory");
             primaryStage.setTitle("Complete Inventory");
 

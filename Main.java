@@ -1,5 +1,10 @@
 package application;
 
+import java.util.HashMap;
+
+import application.Inventory;
+import application.Inventory.HashNode;
+import application.Main.Computer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -30,6 +35,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application implements EventHandler<ActionEvent> {
 
+  private Inventory inventory = new Inventory();
   private TableView<Computer> table = new TableView<Computer>();
   private final ObservableList<Computer> data =
       FXCollections.observableArrayList(
@@ -46,6 +52,15 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     stage.setWidth(450);
     stage.setHeight(550);
 
+    // Read in JSON file and place data in observable list
+    String test = "C:/Users/Andrew/eclipse-workspace/ATeam/CS400ATeam/items.json";
+    inventory.readFile(test);
+    HashMap<String,HashNode> table1 = inventory.getTable();
+    for (String key:table1.keySet()) {
+    	data.addAll(new Computer(table1.get(key).key, table1.get(key).location,table1.get(key).date ));
+    }  		
+    
+    
     final Label label = new Label("Information Search");
     label.setFont(new Font("Arial", 20));
 
