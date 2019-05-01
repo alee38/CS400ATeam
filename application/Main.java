@@ -147,6 +147,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         // handle save button by saving to JSON
        saveButton.setOnAction((ActionEvent saveAll) -> {
     	   inventory.writeJSON();
+    	   save.close();
+    	   stage.close();
        });
         
         
