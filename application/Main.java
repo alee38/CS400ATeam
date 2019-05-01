@@ -125,12 +125,17 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         fileComputer.setPredicate(null);// This is same as saying flPerson.setPredicate(p->true);
       }
     });
-    HBox hBox = new HBox(choiceBox, textField);// Add choiceBox and textField to hBox
+    
+    Button search = new Button("Search");
+    
+    HBox hBox = new HBox(choiceBox, textField, search);// Add choiceBox and textField to hBox
     hBox.setAlignment(Pos.CENTER);// Center HBox
     final VBox vbox = new VBox();
     vbox.setSpacing(5);
     vbox.setPadding(new Insets(10, 0, 0, 10));
 
+    
+    // Handle the Add button by going to add page
     Button b1 = new Button("Add");
     b1.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -166,13 +171,14 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         BorderPane.setAlignment(vBox, Pos.CENTER);
 
         Scene secondScene = new Scene(borderPane, 350, 450);
+        
 
         Stage newWindow = new Stage();
         newWindow.setTitle("Add Item");
         newWindow.setScene(secondScene);
 
         newWindow.setX(600);
-        newWindow.setY(600);
+        newWindow.setY(500);
         newWindow.show();
 
         Button button1 = new Button("Add");
@@ -181,8 +187,20 @@ public class Main extends Application implements EventHandler<ActionEvent> {
           data.add(new Computer(tf1.getText(), tf2.getText(), tf3.getText()));
           tf1.clear();
           tf2.clear();
-          tf3.clear();         
+          tf3.clear();  
+          
+          // Creates "Successfully Added" window on click
+          BorderPane root = new BorderPane();
+          Scene successScene = new Scene(root, 150, 150);
+          Stage success = new Stage();
+          success.setScene(successScene);
+          success.setX(600);
+          success.setY(500);
+          Label successLabel = new Label("Successfully Added!");
+          root.setCenter(successLabel);
+          success.show();
           newWindow.close();
+          
         });
         button2.setOnAction((ActionEvent e) -> {
           newWindow.close();
@@ -201,10 +219,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     stage.show();
   }
 
-
-  public void handle(ActionEvent event) {
-
-  }
+  // Because we need to have it
+  public void handle(ActionEvent event) {}
 
   public static class Computer {
 

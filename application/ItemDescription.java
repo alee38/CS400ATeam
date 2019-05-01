@@ -3,6 +3,8 @@ package application;
 import java.awt.TextArea;
 import java.util.List;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
@@ -19,7 +21,7 @@ import javafx.scene.text.Text;
  * Creates a GUI in which users will see the details of 
  * the item they searched for.
  */
-public class ItemDescription extends Application {
+public class ItemDescription extends Application implements EventHandler<ActionEvent>{
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -34,6 +36,16 @@ public class ItemDescription extends Application {
             primaryStage.setTitle("Complete Inventory");
 
             Button returnButton = new Button("Return");
+            returnButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                	 returnButton.setOnAction((ActionEvent e) -> {
+                         primaryStage.close();
+                       });
+                }
+            });
+
 
             // hard-coded now, should be changed later
             Label itemName = new Label("Computer  ");
@@ -62,6 +74,8 @@ public class ItemDescription extends Application {
         }
     }
 
+    public void handle(ActionEvent event) {}
+    
     public static void main(String[] args) {
         launch(args);
     }
