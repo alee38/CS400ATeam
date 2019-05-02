@@ -49,18 +49,22 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     private Inventory inventory = new Inventory();
     private TableView<Computer> table = new TableView<Computer>();
     private final ObservableList<Computer> data = FXCollections.observableArrayList();
-    
-    Comparator<Computer> comparator = Comparator.comparing(Computer::getFirstName); 
-    
-    
-    
+
+    Comparator<Computer> comparator = Comparator.comparing(Computer::getFirstName);
+
     public static void main(String[] args) {
         launch(args);
     }
 
+    /*
+     * check input in add page follows the following format: 
+     * name: "itemname-000" (must have a string and a number connected by "-" ) 
+     * location: can only be numbers 
+     * date: dd/mm/yyyy
+     */
     public void checkInput(String inputname, String inputlocation, String inputdate)
                     throws Exception {
-
+        
         try {
             if (inventory.getTable().containsKey(inputname)) {
                 throw new Exception();
@@ -70,7 +74,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         } catch (Exception e) {
             // TODO: handle exception
-            //System.out.println("wrong name");
+            // System.out.println("wrong name");
             throw new Exception();
         }
         try {
@@ -89,7 +93,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
         } catch (Exception e) {
             // TODO: handle exception
-            //System.out.println("wrong date");
+            // System.out.println("wrong date");
             throw new Exception();
         }
         try {
@@ -142,7 +146,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         FilteredList<Computer> fileComputer = new FilteredList(data, p -> true);// Pass the data to
                                                                                 // a
                                                                                 // filtered list
-        FXCollections.sort(data,comparator);
+        FXCollections.sort(data, comparator);
         table.setItems(fileComputer);// Set the table's items using the filtered list
         table.getColumns().addAll(itemCol, locationCol, dateCol);
 
@@ -206,6 +210,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             // handle save button by saving to JSON
             saveButton.setOnAction((ActionEvent saveAll) -> {
                 inventory.writeJSON();
+                // save.close();
+                // stage.close();
             });
 
 
@@ -277,7 +283,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                         checkInput(tf1.getText(), tf2.getText(), tf3.getText());
                         // update hashtable
                         data.add(new Computer(tf1.getText(), tf2.getText(), tf3.getText()));
-                        FXCollections.sort(data,comparator);
+                        FXCollections.sort(data, comparator);
                         table1.put(tf1.getText(),
                                         new HashNode(tf1.getText(), tf2.getText(), tf3.getText()));
                         tf1.clear();
@@ -306,18 +312,19 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                         warning.setX(600);
                         warning.setY(500);
                         Label successLabel = new Label("Wrong Format!");
-                        Label namewarning=new Label("Item: \"ItemName-000\"" );
-                        Label locationwarning=new Label("Location: \"0000\"");
-                        Label datewarning=new Label("Date: \"dd/mm/yyyy\"");
-                        //grid.setCenter(new VBox(successLabel,namewarning,locationwarning,datewarning));
-                        
+                        Label namewarning = new Label("Item: \"ItemName-000\"");
+                        Label locationwarning = new Label("Location: \"0000\"");
+                        Label datewarning = new Label("Date: \"dd/mm/yyyy\"");
+                        // grid.setCenter(new
+                        // VBox(successLabel,namewarning,locationwarning,datewarning));
+
                         grid.add(successLabel, 0, 0);
                         grid.addRow(1, new Label(""));
                         grid.add(namewarning, 0, 2);
                         grid.add(locationwarning, 0, 3);
                         grid.add(datewarning, 0, 4);
                         grid.setAlignment(Pos.CENTER);
-                        
+
                         warning.show();
                         newWindow.close();
                     }
