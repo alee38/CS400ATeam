@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.zip.CheckedInputStream;
 import org.json.simple.parser.ParseException;
 import application.Inventory;
-// import application.Inventory.HashNode;
 import application.Main.Computer;
 import javafx.application.Application;
 import javafx.application.Platform;
