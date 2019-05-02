@@ -12,8 +12,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 /*
  * This class represents the hash table used to store each item
