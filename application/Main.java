@@ -62,6 +62,9 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     throws Exception {
 
         try {
+            if (inventory.getTable().containsKey(inputname)) {
+                throw new Exception();
+            }
             String[] name = inputname.split("-");
             Integer.valueOf(name[1]);
 
