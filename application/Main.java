@@ -29,6 +29,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -36,6 +37,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -46,10 +48,9 @@ import javafx.stage.Stage;
  */
 public class Main extends Application implements EventHandler<ActionEvent> {
 
-    private Inventory inventory = new Inventory();
+    private Inventory inventory = new Inventory(); // Instance of hash table
     private TableView<Computer> table = new TableView<Computer>();
     private final ObservableList<Computer> data = FXCollections.observableArrayList();
-
     Comparator<Computer> comparator = Comparator.comparing(Computer::getFirstName);
 
     public static void main(String[] args) {
@@ -73,8 +74,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             Integer.valueOf(name[1]);
 
         } catch (Exception e) {
-            // TODO: handle exception
-            // System.out.println("wrong name");
             throw new Exception();
         }
         try {
@@ -92,8 +91,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 throw new Exception();
             }
         } catch (Exception e) {
-            // TODO: handle exception
-            // System.out.println("wrong date");
             throw new Exception();
         }
         try {
@@ -102,7 +99,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 throw new Exception();
             }
         } catch (Exception e) {
-            // TODO: handle exception
             throw new Exception();
         }
 
@@ -111,25 +107,14 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     @Override
     public void start(Stage stage) throws FileNotFoundException, IOException, ParseException {
+    	
         Scene scene = new Scene(new Group());
         stage.setTitle("CompHelp Inventory");
         stage.setWidth(450);
         stage.setHeight(575);
 
-        // Read in JSON file and place data in observable list
-        String file = "output.json";
-        inventory.readFile(file);
-        HashMap<String, HashNode> table1 = inventory.getTable();
-        for (String key : table1.keySet()) {
-            data.addAll(new Computer(table1.get(key).key, table1.get(key).location,
-                            table1.get(key).date));
-        }
-
-
         final Label label = new Label("Information Search");
         label.setFont(new Font("Arial", 20));
-
-        table.setEditable(true);
 
         TableColumn itemCol = new TableColumn("Item");
         itemCol.setMinWidth(200);
@@ -143,13 +128,81 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         dateCol.setMinWidth(100);
         dateCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("email"));
 
+        // Read in JSON file and place data in observable list
+        String file = "output.json";
+        inventory.readFile(file);
+        HashMap<String, HashNode> table1 = inventory.getTable();
+        for (String key : table1.keySet()) {
+            data.addAll(new Computer(table1.get(key).key, table1.get(key).location,
+                            table1.get(key).date));
+        }
+        
+        table.setEditable(true);
+        
+        /*
+         * DESCRIPTION PAGE
+         * 
+         * Table in center of Main page displays all items currently in the hash table.
+         * If a user clicks an item, a new page will show up with details about the item.
+         */
         FilteredList<Computer> fileComputer = new FilteredList(data, p -> true);// Pass the data to
                                                                                 // a
                                                                                 // filtered list
         FXCollections.sort(data, comparator);
         table.setItems(fileComputer);// Set the table's items using the filtered list
         table.getColumns().addAll(itemCol, locationCol, dateCol);
+        table.addEventHandler(MouseEvent.MOUSE_PRESSED,
+                new EventHandler<MouseEvent>() {
+              public void handle(MouseEvent me) {
+                try {
 
+                  Stage new1 = new Stage();
+                  GridPane grid = new GridPane();
+                  Scene scene = new Scene(grid, 300, 200);
+
+                  scene.getStylesheets().add(getClass().getResource("application.css")
+                          .toExternalForm());
+                  new1.setTitle("Complete Inventory");
+
+                  Button returnButton = new Button("Return");
+                  returnButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                      @Override
+                      public void handle(ActionEvent event) {
+                           returnButton.setOnAction((ActionEvent e) -> {
+                               new1.close();
+                             });
+                      }
+                  });
+                  
+                  Label itemName = new Label("Computer  ");
+                  Label location = new Label("Location  ");
+                  Label t = new Label("Placed There  ");
+
+                  HBox name = new HBox(itemName, new Text(table.getSelectionModel()
+                		  .getSelectedItem().getFirstName()));
+                  HBox loc = new HBox(location, new Text(table.getSelectionModel()
+                		  .getSelectedItem().getLastName()));
+                  HBox time = new HBox(t, new Text(table.getSelectionModel()
+                		  .getSelectedItem().getEmail()));
+
+
+                  grid.add(name, 0, 0);
+                  grid.add(loc, 0, 1);
+                  grid.add(time, 0, 2);
+                  grid.setAlignment(Pos.CENTER);
+                  grid.add(returnButton, 0, 3);
+                  grid.setHgap(10);
+                  grid.setVgap(10);
+
+                  new1.setScene(scene);
+                  new1.show();
+              }catch (Exception e) {
+                e.printStackTrace();
+            }
+              }
+            });
+/////////////////////////////////////////////////////////////////////////////////////
 
         ChoiceBox<String> choiceBox = new ChoiceBox();
         choiceBox.getItems().addAll("Item", "Location", "Date");
@@ -189,18 +242,21 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
         });
 
-        Button search = new Button("Search");
+        /*
+         * SAVE PAGE
+         * 
+         * When the close button on the main page is clicked, a new page 
+         * is brought up with 2 buttons: save and don't save. Save will write
+         * to JSON, don't save will simply close the program.
+         */
         Button close = new Button("Close");
-
-        // Handle Close button
         close.setOnAction((ActionEvent e) -> {
 
             BorderPane root = new BorderPane();
             Scene saveScene = new Scene(root, 200, 50);
             Stage save = new Stage();
             save.setScene(saveScene);
-            save.setX(400);
-            save.setY(50);
+            save.centerOnScreen();
             Button saveButton = new Button("Save");
             Button dontSaveButton = new Button("Exit without Saving");
             root.setLeft(saveButton);
@@ -210,11 +266,9 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             // handle save button by saving to JSON
             saveButton.setOnAction((ActionEvent saveAll) -> {
                 inventory.writeJSON();
-                // save.close();
-                // stage.close();
+                save.close();
+                stage.close();
             });
-
-
 
             // handle Dont Save by closing everything
             dontSaveButton.setOnAction((ActionEvent event) -> {
@@ -222,15 +276,24 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 stage.close();
             });
         });
-
-        HBox hBox = new HBox(choiceBox, textField, search);// Add choiceBox and textField to hBox
+////////////////////////////////////////////////////////////////////////////////////////
+        
+        Label numItems = new Label("# Items = " + data.size());
+        HBox hBox = new HBox(choiceBox, textField, numItems);
         hBox.setAlignment(Pos.CENTER);// Center HBox
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
 
 
-        // Handle the Add button by going to add page
+        /*
+         * ADD PAGE
+         * 
+         * Clicking the add button on the main page will bring up a new page prompting
+         * the user to enter the details for the item they wish to add to the table.
+         * From this page, they can click "add" to finalize, or simply quit out to return 
+         * to the main page
+         */
         Button b1 = new Button("Add");
         b1.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -272,16 +335,14 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 newWindow.setTitle("Add Item");
                 newWindow.setScene(secondScene);
 
-                newWindow.setX(600);
-                newWindow.setY(500);
+                newWindow.centerOnScreen();
                 newWindow.show();
 
+                // Add button on the Add page. Checks for valid input and then adds to table.
                 Button button1 = new Button("Add");
-                Button button2 = new Button("Cancel");
                 button1.setOnAction((ActionEvent e) -> {
                     try {
-                        checkInput(tf1.getText(), tf2.getText(), tf3.getText());
-                        // update hashtable
+                        checkInput(tf1.getText(), tf2.getText(), tf3.getText()); // update hashtable                    
                         data.add(new Computer(tf1.getText(), tf2.getText(), tf3.getText()));
                         FXCollections.sort(data, comparator);
                         table1.put(tf1.getText(),
@@ -295,28 +356,24 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                         Scene successScene = new Scene(root, 200, 200);
                         Stage success = new Stage();
                         success.setScene(successScene);
-                        success.setX(600);
-                        success.setY(500);
+                        success.centerOnScreen();
                         Label successLabel = new Label("Successfully Added!");
                         root.setCenter(successLabel);
                         success.show();
                         newWindow.close();
                     } catch (Exception ex) {
-                        // TODO: handle exception
-                        // Creates "Successfully Added" window on click
+                    	
+                        // Creates "Warning" window when invalid input detected
                         GridPane grid = new GridPane();
                         Scene warningscene = new Scene(grid, 200, 200);
                         Stage warning = new Stage();
                         warning.setTitle("Warning");
                         warning.setScene(warningscene);
-                        warning.setX(600);
-                        warning.setY(500);
+                        warning.centerOnScreen();
                         Label successLabel = new Label("Wrong Format!");
                         Label namewarning = new Label("Item: \"ItemName-000\"");
                         Label locationwarning = new Label("Location: \"0000\"");
                         Label datewarning = new Label("Date: \"dd/mm/yyyy\"");
-                        // grid.setCenter(new
-                        // VBox(successLabel,namewarning,locationwarning,datewarning));
 
                         grid.add(successLabel, 0, 0);
                         grid.addRow(1, new Label(""));
@@ -331,7 +388,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
                 });
 
-
+                // Cancel button on Add page. Closes window.
+                Button button2 = new Button("Cancel");
                 button2.setOnAction((ActionEvent e) -> {
                     newWindow.close();
                 });
@@ -341,6 +399,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
             }
         });
+/////////////////////////////////////////////////////////////////////
+        
         vbox.getChildren().addAll(label, table, hBox, b1, close);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
@@ -351,7 +411,11 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     // Because we need to have it
     public void handle(ActionEvent event) {}
-
+    
+    
+    /*
+     * Represents the key:Node pairs in the hash table.
+     */
     public static class Computer {
 
         private final SimpleStringProperty item;

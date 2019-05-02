@@ -22,26 +22,6 @@ import com.google.gson.GsonBuilder;
  */
 public class Inventory {
 	
-	// Inner class for the hash table
-	class HashNode {
-		String key;
-		String location;
-		String date;
-		//private Node next;
-
-		// Initialize a hashNode with given key and value
-		// Key cannot be null, or else throw IllegalNullKeyException
-		HashNode(String key, String location, String date) {
-			if (key != null) {
-
-				this.key = key;
-				this.location = location;
-				this.date=date;
-				//this.next = null;
-			}
-		}
-	}
-
 	public HashMap<String, HashNode> table;
 
 	// constructor
@@ -60,9 +40,7 @@ public class Inventory {
 			String name = (String) item.get("itemName");
 			String location = (String) item.get("itemRoom");
 			String date = (String) item.get("itemDate");
-			//System.out.println((int) Math.abs(name.hashCode() % 11));
 			HashNode node=new HashNode(name, location, date);
-
 			table.put(name, node);
 		}
 	}
@@ -99,27 +77,6 @@ public class Inventory {
 		}
 	}
 
-	//	// test
-	//	public void printTable() {
-	//		for (String key : table.keySet()) {
-	//			System.out.println(key);
-	//			System.out.println((int) Math.abs(key.hashCode() % 11));
-	//			//System.out.println(table.get(key));
-	//			//System.out.println(table.get(key)[1]);
-	//			System.out.println();
-	//			
-	//		}
-	//	}
-
-	/*
-	 * Writes JSON to console. 
-	 * NOT NECESSARY
-	 */
-	public void updateJSON(Inventory table) {
-		Gson gsonBuilder = new GsonBuilder().create();
-		String jsonFromList = gsonBuilder.toJson(table);
-		System.out.println(jsonFromList);
-	}
 
 	/*
 	 * Getter for the hash table
@@ -133,13 +90,12 @@ public class Inventory {
 	 * NOT NECESSARY
 	 */
 	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
-		// TODO Auto-generated method stub
-		String test = "C:/Users/Andrew/eclipse-workspace/ATeam/CS400ATeam/items.json";
+		String test = "items.json";
 		Inventory inventory = new Inventory();
 		inventory.readFile(test);
 		//inventory.printTable();
 		inventory.writeJSON();
-		inventory.updateJSON(inventory);
+
 
 	}
 
