@@ -21,4 +21,4 @@ clean:
 	\rm executable.jar
 
 zip:
-	jar -cMf team.zip README.txt executable.jar screenshot* manifest.txt items.json application
+	jar -cMf team.zip README.txt executable.jar screenshot* manifest.txt output.json application/*

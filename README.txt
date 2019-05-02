@@ -12,6 +12,8 @@ Team Members:
 
 Notes or comments to the grader:
 
-Everything is hard coded at the moment.
+Item description return button requires double click.
+Everything should work, but we encounter some issues when some people
+	clone the repository. It might be a difference in Java versions.
 
 
