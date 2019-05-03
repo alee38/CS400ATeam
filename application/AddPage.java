@@ -1,3 +1,12 @@
+// Title:           CompHelp Inventory
+// Files:           AddPage.java
+// Course:          CS400 Spring 2019
+//
+// Author:          Andrew Lee, Qingland Ye, Di Bao, Xiaoyu Liu, Chengze Qian
+// Email:           alee38@wisc.edu
+// Lecturer's Name: Debra Deppeler
+
+/////////////////////////////// 80 COLUMNS WIDE ///////////////////////////////
 package application;
 
  import javafx.application.Application;

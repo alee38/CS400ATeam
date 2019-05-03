@@ -15,5 +15,8 @@ Notes or comments to the grader:
 Item description return button requires double click.
 Everything should work, but we encounter some issues when some people
 	clone the repository. It might be a difference in Java versions.
+	
+AddPage and ItemDescription were used for milestone 2, but the windows that are created
+in Main are produced inside Main, so AddPage and ItemDescription are generally unused.
 
 

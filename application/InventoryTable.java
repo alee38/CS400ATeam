@@ -1,3 +1,12 @@
+// Title:           CompHelp Inventory
+// Files:           InventoryTable.java
+// Course:          CS400 Spring 2019
+//
+// Author:          Andrew Lee, Qingland Ye, Di Bao, Xiaoyu Liu, Chengze Qian
+// Email:           alee38@wisc.edu
+// Lecturer's Name: Debra Deppeler
+
+/////////////////////////////// 80 COLUMNS WIDE ///////////////////////////////
 package application;
 
 
@@ -45,7 +54,6 @@ public class InventoryTable {
 
 
     public String[] get(String key) {
-        // TODO Auto-generated method stub
         int index = hash(key);
         Node cur = table[index];
         while (cur.next != null) {
@@ -60,7 +68,6 @@ public class InventoryTable {
 
  
     public void add(String key, String location, String date) {
-        // TODO Auto-generated method stub
         insertHelper(key, location, date, table);
 
         if (getLoadFactor() > loadFactorThreshold) {// if LF threshold is reached, resize and rehash
@@ -98,26 +105,22 @@ public class InventoryTable {
     }
 
     private double getLoadFactor() {
-        // TODO Auto-generated method stub
         return (double) size / capacity;
     }
 
 
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
         return size == 0;
     }
 
 
     public int getSize() {
-        // TODO Auto-generated method stub
         return this.size;
     }
 
 
 
     public boolean remove(String key) {
-        // TODO Auto-generated method stub
         
         if (key == null) {
             return false;

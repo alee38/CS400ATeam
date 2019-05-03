@@ -1,3 +1,12 @@
+// Title:           CompHelp Inventory
+// Files:           ItemDescription.java
+// Course:          CS400 Spring 2019
+//
+// Author:          Andrew Lee, Qingland Ye, Di Bao, Xiaoyu Liu, Chengze Qian
+// Email:           alee38@wisc.edu
+// Lecturer's Name: Debra Deppeler
+
+/////////////////////////////// 80 COLUMNS WIDE ///////////////////////////////
 package application;
 
 import java.awt.TextArea;
@@ -32,7 +41,6 @@ public class ItemDescription extends Application implements EventHandler<ActionE
 
             scene.getStylesheets().add(getClass().getResource("application.css")
             		.toExternalForm());
-            // Label label = new Label("Complete Inventory");
             primaryStage.setTitle("Complete Inventory");
 
             Button returnButton = new Button("Return");
@@ -46,8 +54,6 @@ public class ItemDescription extends Application implements EventHandler<ActionE
                 }
             });
 
-
-            // hard-coded now, should be changed later
             Label itemName = new Label("Computer  ");
             Label location = new Label("Location  ");
             Label t = new Label("Placed There  ");
@@ -65,7 +71,6 @@ public class ItemDescription extends Application implements EventHandler<ActionE
             grid.setHgap(10);
             grid.setVgap(10);
 
-            // grid.add(hbButtons, 0, 2, 2, 1);
 
             primaryStage.setScene(scene);
             primaryStage.show();
